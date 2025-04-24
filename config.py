@@ -5,6 +5,9 @@ class Config:
     
     # Groq API Key
     GROQ_API_KEY = "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"
+
+    # HF API Key
+    HF_API_KEY = "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"
     
     # Database configuration
     SQLALCHEMY_DATABASE_URI = 'sqlite:///pdf_summarizer.db'
