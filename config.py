@@ -4,7 +4,7 @@ class Config:
 
     
     # Groq API Key
-    GROQ_API_KEY = "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"
+    GROQ_API_KEY = "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"
 
     # HF API Key
     HF_API_KEY = "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"
