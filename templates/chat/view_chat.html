@@ -6,7 +6,7 @@
 <div class="mt-6 h-[calc(100vh-200px)] flex flex-col">
     <div class="flex justify-between items-center mb-4">
         <div>
-            <h1 class="text-2xl font-bold text-primary-800">{{ chat_session.title }}</h1>
+            <h1 class="text-2xl font-bold text-green-800">{{ chat_session.title }}</h1>
             <div class="text-sm text-gray-500">
                 <span>{{ chat_session.created_at.strftime('%b %d, %Y at %H:%M') }}</span>
                 <span class="mx-2">•</span>
@@ -27,11 +27,11 @@
 
     <!-- PDF Information -->
     <div class="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-100">
-        <h3 class="font-medium mb-2 text-gray-700"><i class="fas fa-file-pdf text-primary-600 mr-2"></i>PDFs in this Chat:</h3>
+        <h3 class="font-medium mb-2 text-gray-700"><i class="fas fa-file-pdf text-green-600 mr-2"></i>PDFs in this Chat:</h3>
         <div class="flex flex-wrap gap-2">
             {% for pdf in pdfs %}
                 <div class="bg-gray-50 rounded-lg px-3 py-1.5 text-sm flex items-center border border-gray-200 hover:bg-gray-100 transition-colors">
-                    <i class="fas fa-file-pdf text-primary-600 mr-2"></i>
+                    <i class="fas fa-file-pdf text-green-600 mr-2"></i>
                     <span>{{ pdf.original_filename }}</span>
                 </div>
             {% endfor %}
@@ -62,8 +62,8 @@
             </div>
         {% else %}
             <div class="flex flex-col items-center justify-center h-full text-gray-500 space-y-4">
-                <div class="w-16 h-16 rounded-full bg-primary-50 flex items-center justify-center">
-                    <i class="fas fa-comments text-primary-400 text-2xl"></i>
+                <div class="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center">
+                    <i class="fas fa-comments text-green-400 text-2xl"></i>
                 </div>
                 <p>Start asking questions about your PDFs</p>
                 <p class="text-sm text-gray-400">Your conversation will appear here</p>
@@ -90,7 +90,7 @@
                     <i class="fas fa-microphone"></i>
                 </div>
             </div>
-            <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-r-lg flex items-center transition-colors">
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-r-lg flex items-center transition-colors">
                 <i class="fas fa-paper-plane mr-2"></i> Send
             </button>
         </form>

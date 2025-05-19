@@ -5,12 +5,12 @@
 {% block content %}
 <div class="mt-6">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-primary-800">Summary: {{ pdf.original_filename }}</h1>
+        <h1 class="text-2xl font-bold text-green-800">Summary: {{ pdf.original_filename }}</h1>
         <div class="flex space-x-3">
-            <a href="{{ url_for('pdf.view_pdf', pdf_id=pdf.id) }}" class="text-primary-600 hover:text-primary-800">
+            <a href="{{ url_for('pdf.view_pdf', pdf_id=pdf.id) }}" class="text-green-600 hover:text-green-800">
                 <i class="fas fa-file-pdf mr-1"></i> View PDF
             </a>
-            <a href="{{ url_for('pdf.dashboard') }}" class="text-primary-600 hover:text-primary-800">
+            <a href="{{ url_for('pdf.dashboard') }}" class="text-green-600 hover:text-green-800">
                 <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
             </a>
         </div>
@@ -18,7 +18,7 @@
 
     <div class="bg-white rounded-lg shadow-md p-6">
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-semibold text-primary-700">AI-Generated Summary</h2>
+            <h2 class="text-xl font-semibold text-green-700">AI-Generated Summary</h2>
             <button id="copy-summary" class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded flex items-center text-sm">
                 <i class="far fa-copy mr-1"></i> Copy
             </button>
@@ -31,7 +31,7 @@
 
     <div class="mt-6 flex justify-between">
         <div>
-            <a href="{{ url_for('chat.ask_pdf_question', pdf_id=pdf.id) }}" class="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded">
+            <a href="{{ url_for('chat.ask_pdf_question', pdf_id=pdf.id) }}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                 <i class="fas fa-question-circle mr-2"></i> Ask a Question
             </a>
         </div>
@@ -40,7 +40,7 @@
             <!-- Start a new chat with this PDF -->
             <form action="{{ url_for('chat.new_chat') }}" method="POST">
                 <input type="hidden" name="pdf_ids" value="{{ pdf.id }}">
-                <button type="submit" class="bg-primary-100 hover:bg-primary-200 text-primary-800 font-bold py-2 px-4 rounded">
+                <button type="submit" class="bg-green-100 hover:bg-green-200 text-green-800 font-bold py-2 px-4 rounded">
                     <i class="fas fa-comments mr-2"></i> Chat with this PDF
                 </button>
             </form>

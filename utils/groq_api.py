@@ -2,49 +2,43 @@ import requests
 import json
 from config import Config
 
-# Configure Groq API key
-GROQ_API_KEY = Config.GROQ_API_KEY
-API_URL = "https://api.groq.com/openai/v1/chat/completions"
-MODEL = "llama3-70b-8192"  # Using Llama3 model from Groq
-
-def get_headers():
-    """Return the headers needed for Groq API requests"""
-    return {
-        "Authorization": f"Bearer {GROQ_API_KEY}",
-        "Content-Type": "application/json"
-    }
+# Configure Ollama
+OLLAMA_API_URL = "http://localhost:11434/api/chat"  # Default Ollama API endpoint
+MODEL = "b-aser/jkug3-v1"  # Using your local Llama 3.2 model (adjust if your model name is different)
 
 def ask_question(question, context):
     """
-    Ask a question to the Groq API and return the response
+    Ask a question to the Ollama API and return the response
     
     Args:
         question (str): The question to ask
         context (str): The context to consider when answering the question
     
     Returns:
-        str: The answer from the Groq API
+        str: The answer from the Ollama API
     """
     messages = [
         {"role": "system", "content": """You are a document assistant that ONLY answers questions based on the provided context. 
-If the question is not directly answerable from the document, respond with: 
-"I can only answer questions related to the document content. This question cannot be answered based on the provided document."
-Never use external knowledge or make assumptions beyond what's explicitly stated in the document."""},
+        If the question is not directly answerable from the document, respond with: 
+        "I can only answer questions related to the document content. This question cannot be answered based on the provided document."
+        Never use external knowledge or make assumptions beyond what's explicitly stated in the document."""},
         {"role": "user", "content": f"Context from document:\n{context}\n\nQuestion: {question}"}
     ]
     
     payload = {
         "model": MODEL,
         "messages": messages,
-        "temperature": 0.0,  # Lower temperature for more deterministic responses
-        "max_tokens": 1024
+        "options": {
+            "temperature": 0.0,  # Lower temperature for more deterministic responses
+        },
+        "stream": False  # We want a complete response, not streaming
     }
     
     try:
-        response = requests.post(API_URL, headers=get_headers(), json=payload)
+        response = requests.post(OLLAMA_API_URL, json=payload)
         response.raise_for_status()
         data = response.json()
-        return data["choices"][0]["message"]["content"]
+        return data["message"]["content"]
     except Exception as e:
         print(f"Error in ask_question: {e}")
         return f"I encountered an error while trying to answer your question: {str(e)}"
@@ -57,7 +51,7 @@ def summarize_text(text):
         text (str): The text to summarize
     
     Returns:
-        str: The summary from the Groq API
+        str: The summary from the Ollama API
     """
     messages = [
         {"role": "system", "content": "You are a document summarization assistant. Provide a concise but comprehensive summary of the text provided, focusing ONLY on information explicitly stated in the document."},
@@ -67,15 +61,17 @@ def summarize_text(text):
     payload = {
         "model": MODEL,
         "messages": messages,
-        "temperature": 0.1,  # Low temperature for more consistent summaries
-        "max_tokens": 1024
+        "options": {
+            "temperature": 0.1,  # Low temperature for more consistent summaries
+        },
+        "stream": False
     }
     
     try:
-        response = requests.post(API_URL, headers=get_headers(), json=payload)
+        response = requests.post(OLLAMA_API_URL, json=payload)
         response.raise_for_status()
         data = response.json()
-        return data["choices"][0]["message"]["content"]
+        return data["message"]["content"]
     except Exception as e:
         print(f"Error in summarize_text: {e}")
         return f"I encountered an error while trying to summarize the text: {str(e)}"
@@ -91,7 +87,7 @@ def chat_with_pdfs(message, pdf_contents, chat_history=None, pdf_sources=None):
         pdf_sources (list, optional): List indicating which PDF each chunk belongs to. Defaults to None.
     
     Returns:
-        str: The response from the Groq API
+        str: The response from the Ollama API
     """
     if chat_history is None:
         chat_history = []
@@ -203,15 +199,17 @@ Follow these strict rules:
     payload = {
         "model": MODEL,
         "messages": messages,
-        "temperature": 0.0,  # Zero temperature for more deterministic responses
-        "max_tokens": 1024
+        "options": {
+            "temperature": 0.0,  # Zero temperature for more deterministic responses
+        },
+        "stream": False
     }
     
     try:
-        response = requests.post(API_URL, headers=get_headers(), json=payload)
+        response = requests.post(OLLAMA_API_URL, json=payload)
         response.raise_for_status()
         data = response.json()
-        return data["choices"][0]["message"]["content"]
+        return data["message"]["content"]
     except Exception as e:
         print(f"Error in chat_with_pdfs: {e}")
-        return f"I encountered an error while processing your request: {str(e)}" 
+        return f"I encountered an error while processing your request: {str(e)}"
